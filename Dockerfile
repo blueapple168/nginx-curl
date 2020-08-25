@@ -7,7 +7,7 @@ RUN apk add --no-cache tzdata curl && \
     sed -i -r \
     -e '/^\s*(#|$)/d' \
     -e 's/listen\s.+/listen 8080;/' \
-    -e 's#index  index.html index.htm;#try_files $uri $uri/ /index.html;#' \
+    -e 's#index  index.html index.htm;#try_files $uri $uri/index.html /index.html;#' \
     /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/share/nginx/html
