@@ -26,6 +26,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
      cd /tmp ; \
      tar -xf nginx-1.20.0.tar.gz ; \
      cd nginx-1.20.0 ; \
+    ./configure ; \
     --prefix=/etc/nginx \
     --sbin-path=/usr/sbin/nginx \
     --modules-path=/usr/lib/nginx/modules \
