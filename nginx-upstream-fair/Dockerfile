@@ -35,7 +35,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
                 tar \
                 zlib-dev
  
- ARG NGINX_VERSION=1.20.0               
+ ARG NGINX_VERSION=1.20.0
+ ARG NGINX_PGPKEY=520A9993A1C052F8
  ARG NGINX_BUILD_CONFIG="\
         --prefix=/etc/nginx \
         --sbin-path=/usr/sbin/nginx \
