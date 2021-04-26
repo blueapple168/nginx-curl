@@ -90,7 +90,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
          gpg --keyserver hkp://keyserver.ubuntu.com:80 --keyserver-options timeout=10 --recv-keys ${NGINX_PGPKEY} || \
          gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --keyserver-options timeout=10 --recv-keys $NGINX_PGPKEY} ) ; \
          gpg --trusted-key ${NGINX_PGPKEY} --verify nginx-${NGINX_VERSION}.tar.gz.asc ; \
-     wget https://github.com/gnosek/nginx-upstream-fair/archive/refs/heads/master.zip ; \
+     wget -O nginx-upstream-fair-master.zip https://github.com/gnosek/nginx-upstream-fair/archive/refs/heads/master.zip ; \
      unzip nginx-upstream-fair-master.zip ; \
      sed -i 's/default_port/no_port/g' /tmp/nginx-upstream-fair-master/ngx_http_upstream_fair_module.c
 
