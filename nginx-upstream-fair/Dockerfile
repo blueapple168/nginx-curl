@@ -1,11 +1,11 @@
-FROM nginx:1.20.0-alpine
+##################################################
+# Build Nginx with support for ngx_upstream_fair #
+##################################################
+FROM nginx:1.20.0-alpine AS nginx
 
 WORKDIR /tmp
-COPY nginx-upstream-fair /tmp/
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories ; \
-    apk add --no-cache tzdata; \
-    cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
     apk add --no-cache --virtual .build-deps \
                 gcc \
                 libc-dev \
@@ -33,7 +33,9 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
                 libressl-dev \
                 pcre-dev \
                 tar \
-                zlib-dev
+                zlib-dev \
+                unzip \
+                zip
  
  ARG NGINX_VERSION=1.20.0
  ARG NGINX_PGPKEY=520A9993A1C052F8
@@ -83,21 +85,54 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
         --with-http_v2_module \
     "
  RUN wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
-         https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz.asc && \
+         https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz.asc ; \
          (gpg --keyserver ha.pool.sks-keyservers.net --keyserver-options timeout=10 --recv-keys ${NGINX_PGPKEY} || \
          gpg --keyserver hkp://keyserver.ubuntu.com:80 --keyserver-options timeout=10 --recv-keys ${NGINX_PGPKEY} || \
-         gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --keyserver-options timeout=10 --recv-keys $NGINX_PGPKEY} ) && \
-         gpg --trusted-key ${NGINX_PGPKEY} --verify nginx-${NGINX_VERSION}.tar.gz.asc
+         gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --keyserver-options timeout=10 --recv-keys $NGINX_PGPKEY} ) ; \
+         gpg --trusted-key ${NGINX_PGPKEY} --verify nginx-${NGINX_VERSION}.tar.gz.asc ; \
+     wget https://github.com/gnosek/nginx-upstream-fair/archive/refs/heads/master.zip ; \
+     unzip nginx-upstream-fair-master.zip ; \
+     sed -i 's/default_port/no_port/g' /tmp/nginx-upstream-fair-master/ngx_http_upstream_fair_module.c
 
 WORKDIR /tmp/nginx
 
-RUN tar zxf ../nginx-${NGINX_VERSION}.tar.gz --strip-components=1 -C . && \
+RUN tar zxf ../nginx-${NGINX_VERSION}.tar.gz --strip-components=1 -C . ; \
     ./configure \
         ${NGINX_BUILD_CONFIG} \
-        --add-module=/tmp/nginx-upstream-fair \
+        --add-module=/tmp/nginx-upstream-fair-master \
         --with-http_ssl_module \
         --with-ld-opt="-Wl,-z,relro,--start-group -lapr-1 -laprutil-1 -licudata -licuuc -lpng -lturbojpeg -ljpeg" ; \
     make install -j`nproc` ; \
-    rm -rf /tmp/nginx
+    rm -rf /tmp/*.gz \
+           /tmp/*.zip \
+           /tmp/nginx/*
+
+##########################################
+# Combine everything with minimal layers #
+##########################################
+
+FROM nginx:1.20.0-alpine
+LABEL maintainer="blueapple <blueapple1120@qq.com>" \
+      version.mod-nginx-upstream-fair="master" \
+      version.nginx="1.20.0 stable"
+
+COPY --from=nginx /usr/sbin/nginx /usr/sbin/nginx
+COPY --from=nginx /usr/lib/nginx/modules/ /usr/lib/nginx/modules/
+COPY --from=nginx /etc/nginx /etc/nginx
+COPY --from=nginx /usr/share/nginx/html/ /usr/share/nginx/html/
+
+RUN apk --no-cache upgrade ; \
+    scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /usr/local/bin/envsubst \
+            | tr ',' '\n' \
+            | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+            | xargs apk add --no-cache \
+    ; \
+    apk add --no-cache tzdata
+
+RUN addgroup -S nginx ; \
+    adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx ; \
+    cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
     
-WORKDIR /usr/share/nginx/html   
+STOPSIGNAL SIGQUIT
+EXPOSE 80 443
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
