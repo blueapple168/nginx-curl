@@ -129,8 +129,8 @@ RUN apk --no-cache upgrade ; \
     ; \
     apk add --no-cache tzdata
 
-RUN addgroup -S nginx ; \
-    adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx ; \
+RUN addgroup -g 101 -S nginx ; \
+    adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx ; \
     cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
     
 STOPSIGNAL SIGQUIT
