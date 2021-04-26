@@ -68,7 +68,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
         --with-mail_ssl_module \
         --with-compat \
         --with-file-aio \
-        --with-http_v2_module
+        --with-http_v2_module \
     "
  RUN wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
          https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz.asc && \
