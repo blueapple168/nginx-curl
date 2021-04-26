@@ -88,3 +88,4 @@ RUN tar zxf ../nginx-${NGINX_VERSION}.tar.gz --strip-components=1 -C . && \
     make install -j`nproc` ; \
     rm -rf /tmp/nginx
     
+WORKDIR /usr/share/nginx/html   
