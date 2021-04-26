@@ -22,7 +22,24 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
                 mercurial \
                 bash \
                 alpine-sdk \
-                findutils
+                findutils \
+                apr-dev \
+                apr-util-dev \
+                build-base \
+                ca-certificates \
+                gd-dev \
+                geoip-dev \
+                git \
+                gnupg \
+                icu-dev \
+                libjpeg-turbo-dev \
+                libpng-dev \
+                libxslt-dev \
+                linux-headers \
+                libressl-dev \
+                pcre-dev \
+                tar \
+                zlib-dev
  
  ARG NGINX_VERSION=1.20.0               
  ARG NGINX_BUILD_CONFIG="\
