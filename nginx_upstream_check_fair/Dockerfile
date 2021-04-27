@@ -122,7 +122,6 @@ LABEL maintainer="blueapple <blueapple1120@qq.com>" \
       version.nginx="$NGINX_VERSION stable"
 
 COPY --from=nginx /usr/sbin/nginx /usr/sbin/nginx
-#COPY --from=nginx /tmp/nginx/objs/nginx /usr/sbin/nginx
 COPY --from=nginx /usr/lib/nginx/modules/ /usr/lib/nginx/modules/
 COPY --from=nginx /etc/nginx /etc/nginx
 COPY --from=nginx /usr/share/nginx/html/ /usr/share/nginx/html/
