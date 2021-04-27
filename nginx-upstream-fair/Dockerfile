@@ -6,27 +6,36 @@ FROM nginx:1.20.0-alpine AS nginx
 WORKDIR /tmp
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories ; \
-    apk add --no-cache \
-        apache2-dev \
-        gcc \
-        make \
-        gnupg \
-        apr-dev \
-        apr-util-dev \
-        build-base \
-        curl \
-        gettext-dev \
-        git \
-        gperf \
-        icu-dev \
-        libjpeg-turbo-dev \
-        libpng-dev \
-        libressl-dev \
-        pcre-dev \
-        py-setuptools \
-        zlib-dev \
-        unzip \
-        zip
+    apk add --no-cache --virtual .build-deps \
+                gcc \
+                libc-dev \
+                make \
+                openssl-dev \
+                perl-dev \
+                libedit-dev \
+                mercurial \
+                bash \
+                alpine-sdk \
+                findutils \
+                apr-dev \
+                apr-util-dev \
+                build-base \
+                ca-certificates \
+                gd-dev \
+                geoip-dev \
+                git \
+                gnupg \
+                icu-dev \
+                libjpeg-turbo-dev \
+                libpng-dev \
+                libxslt-dev \
+                linux-headers \
+                libressl-dev \
+                pcre-dev \
+                tar \
+                zlib-dev \
+                unzip \
+                zip
  
  ARG NGINX_VERSION=1.20.0
  ARG NGINX_PGPKEY=520A9993A1C052F8
