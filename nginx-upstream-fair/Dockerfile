@@ -10,6 +10,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
         apache2-dev \
         gcc \
         make \
+        gnupg \
         apr-dev \
         apr-util-dev \
         build-base \
