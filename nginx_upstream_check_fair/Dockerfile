@@ -139,5 +139,5 @@ RUN addgroup -g 101 -S nginx ; \
     cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
     
 STOPSIGNAL SIGQUIT
-EXPOSE 80 443
+EXPOSE 8080 443
 CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
