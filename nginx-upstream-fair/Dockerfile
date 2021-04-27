@@ -1,7 +1,8 @@
+ARG NGINX_VERSION=1.20.0
 ##################################################
 # Build Nginx with support for ngx_upstream_fair #
 ##################################################
-FROM nginx:1.20.0-alpine AS nginx
+FROM nginx:$NGINX_VERSION-alpine AS nginx
 
 WORKDIR /tmp
 
@@ -36,8 +37,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
                 zlib-dev \
                 unzip \
                 zip
- 
- ARG NGINX_VERSION=1.20.0
+                
  ARG NGINX_PGPKEY=520A9993A1C052F8
  ARG NGINX_BUILD_CONFIG="\
         --prefix=/etc/nginx \
@@ -111,10 +111,10 @@ RUN tar zxf ../nginx-${NGINX_VERSION}.tar.gz --strip-components=1 -C . ; \
 # Combine everything with minimal layers #
 ##########################################
 
-FROM nginx:1.20.0-alpine
+FROM nginx:$NGINX_VERSION-alpine
 LABEL maintainer="blueapple <blueapple1120@qq.com>" \
       version.mod-nginx-upstream-fair="master" \
-      version.nginx="1.20.0 stable"
+      version.nginx="$NGINX_VERSION stable"
 
 COPY --from=nginx /usr/sbin/nginx /usr/sbin/nginx
 #COPY --from=nginx /tmp/nginx/objs/nginx /usr/sbin/nginx
