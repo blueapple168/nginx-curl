@@ -1,0 +1,15 @@
+ARG NGINX_VERSION=1.20.0
+FROM nginx:$NGINX_VERSION-alpine
+MAINTAINER blueapple <blueapple1120@qq.com>
+
+RUN apk add --no-cache tzdata curl bash vim ; \
+    cp -r -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime ; \
+    apk del tzdata ; \
+    sed -i -r \
+    -e '/^\s*(#|$)/d' \
+    -e 's/listen\s.+/listen 8080;/' \
+    -e 's#index  index.html index.htm;#try_files $uri $uri/index.html /index.html;#' \
+    /etc/nginx/conf.d/default.conf
+
+WORKDIR /usr/share/nginx/html
+EXPOSE 8080
