@@ -9,7 +9,7 @@
 # Supported tags and respective `Dockerfile` links
 
 -	[`1.20.0`, `mainline`, `1`, `1.20`, `latest`](https://github.com/blueapple168/nginx-curl/blob/master/mainline-alpine/1.20.0-alpine/Dockerfile)
--	[`1.18.0`, `mainline`, `1`, `1.18`, `latest`](https://github.com/blueapple168/nginx-curl/blob/master/mainline-alpine/1.18-alpine/Dockerfile)
+-	[`1.18.0`, `mainline`, `1`, `1.18`](https://github.com/blueapple168/nginx-curl/blob/master/mainline-alpine/1.18-alpine/Dockerfile)
 -	[`1.16.0`, `1-16`, `1.16-alpine`](https://github.com/blueapple168/nginx-curl/blob/master/Dockerfile)
 
 # How to use this image
