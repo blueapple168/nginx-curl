@@ -105,39 +105,39 @@ Then make and make install as usual.
 ```
 # Examples
 ```
-    upstream inve_port {
-        server xxxxxxxx:8080 weight=1;
-        server xxxxxxxx:8081 weight=1;
-        #http health check
-        check interval=3000 rise=2 fall=3 timeout=3000 type=http;
-        #/health/status为后端健康检查接口
-        check_http_send "HEAD /health/status HTTP/1.0\r\n\r\n";
-        check_http_expect_alive http_2xx http_3xx;
+upstream inve_port {
+    server 127.0.0.1:8080 weight=1;
+    server 127.0.0.1:8081 weight=1;
+    #http health check
+    check interval=3000 rise=2 fall=3 timeout=3000 type=http;
+    #/health/status Interface for back-end health check.
+    check_http_send "HEAD /health/status HTTP/1.0\r\n\r\n";
+    check_http_expect_alive http_2xx http_3xx;
     }
-    server {
-        listen       80;
-        server_name  _;
-        access_log  /var/log/nginx/default_access.log  main;
-        error_log  /var/log/nginx/default_error.log  error;
-        #root   /application/nginx/html/default;
-        location / {
-            proxy_pass http://inve_port;
-            add_header backendIP $upstream_addr;
-            add_header backendCode $upstream_status;
-            proxy_set_header X-Forwarded-For $remote_addr;
-        }
-        # 查看后端服务器实时的健康状态
-        location /status {
-                check_status;
-                access_log off;
-        }
-        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
-        {
-            expires 3650d;
-        }
-        location ~ .*\.(js|css)?$
-        {
-            expires 30d;
-        }
+server {
+    listen       80;
+    server_name  _;
+    access_log  /var/log/nginx/default_access.log  main;
+    error_log  /var/log/nginx/default_error.log  error;
+    #root   /application/nginx/html/default;
+    location / {
+        proxy_pass http://inve_port;
+        add_header backendIP $upstream_addr;
+        add_header backendCode $upstream_status;
+        proxy_set_header X-Forwarded-For $remote_addr;
     }
+    # Monitor the real-time health status of the back-end server
+    location /status {
+            check_status;
+            access_log off;
+    }
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+    {
+        expires 3650d;
+    }
+    location ~ .*\.(js|css)?$
+    {
+        expires 30d;
+    }
+}
 ```
