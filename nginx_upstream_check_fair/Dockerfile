@@ -1,4 +1,4 @@
- ARG NGINX_VERSION=1.16.1
+ARG NGINX_VERSION=1.16.1
 ##################################################
 # Build Nginx with support for ngx_upstream_fair #
 ##################################################
