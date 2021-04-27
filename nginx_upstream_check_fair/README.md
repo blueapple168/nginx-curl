@@ -1,3 +1,5 @@
+# Base on NGINX 1.16.1-alpine
+### Nginx with curl net-tools ngx_http_upstream_check_module ngx_http_upstream_fair_module...
 [ngx_http_upstream_check_module](https://github.com/yaoweibin/nginx_upstream_check_module)
 Add proactive health check for the upstream servers.
 it should be enabled with the --with-http_upstream_check_module configuration parameter.
