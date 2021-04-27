@@ -105,8 +105,7 @@ RUN tar zxf ../nginx-${NGINX_VERSION}.tar.gz --strip-components=1 -C . ; \
     make ; \
     make install -j`nproc` ; \
     rm -rf /tmp/*.gz \
-           /tmp/*.zip \
-           /tmp/nginx/*
+           /tmp/*.zip
 
 ##########################################
 # Combine everything with minimal layers #
@@ -118,6 +117,7 @@ LABEL maintainer="blueapple <blueapple1120@qq.com>" \
       version.nginx="1.20.0 stable"
 
 COPY --from=nginx /usr/sbin/nginx /usr/sbin/nginx
+#COPY --from=nginx /tmp/nginx/objs/nginx /usr/sbin/nginx
 COPY --from=nginx /usr/lib/nginx/modules/ /usr/lib/nginx/modules/
 COPY --from=nginx /etc/nginx /etc/nginx
 COPY --from=nginx /usr/share/nginx/html/ /usr/share/nginx/html/
