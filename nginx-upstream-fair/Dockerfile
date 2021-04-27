@@ -102,6 +102,7 @@ RUN tar zxf ../nginx-${NGINX_VERSION}.tar.gz --strip-components=1 -C . ; \
         --add-module=/tmp/nginx-upstream-fair-master \
         --with-http_ssl_module \
         --with-ld-opt="-Wl,-z,relro,--start-group -lapr-1 -laprutil-1 -licudata -licuuc -lpng -lturbojpeg -ljpeg" ; \
+    make ; \
     make install -j`nproc` ; \
     rm -rf /tmp/*.gz \
            /tmp/*.zip \
