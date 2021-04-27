@@ -1,3 +1,8 @@
+# Base on nginx 1.20.0-alpine
+## [Nginx](https://nginx.org/download/nginx-1.20.0.tar.gz) with curl net-tools ngx_http_upstream_fair_module...
+
+## [ngx_http_upstream_fair_module](https://www.nginx.com/resources/wiki/modules/fair_balancer/)
+[ngx_http_upstream_fair_module](https://github.com/gnosek/nginx-upstream-fair)
 ```
 ngx_http_upstream_fair_module - sends an incoming request to the least-busy backend server, rather than distributing requests round-robin.
 
