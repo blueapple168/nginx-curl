@@ -3,6 +3,8 @@
 
 ## [ngx_http_upstream_fair_module](https://www.nginx.com/resources/wiki/modules/fair_balancer/)
 [ngx_http_upstream_fair_module](https://github.com/gnosek/nginx-upstream-fair)
+
+# Examples
 ```
 ngx_http_upstream_fair_module - sends an incoming request to the least-busy backend server, rather than distributing requests round-robin.
 
