@@ -1,8 +1,19 @@
-# Base on nginx 1.16.1-alpine
-## [Nginx](https://nginx.org/download/nginx-1.16.1.tar.gz) with curl net-tools ngx_http_upstream_check_module ngx_http_upstream_fair_module...
+# Base on [nginx 1.16.1-alpine](https://nginx.org/download/nginx-1.16.1.tar.gz) or nginx 1.20.0-alpine(https://nginx.org/download/nginx-1.20.0.tar.gz)
+- Nginx
+- curl
+- net-tools\
+- ngx_http_upstream_check_module
+- ngx_http_upstream_fair_module
+
+# 支持的tags和 `Dockerfile`链接
+-	[`v1.20.0_upstream_check_fair`](https://github.com/blueapple168/nginx-curl/blob/master/nginx_upstream_check_fair/1.20.0/Dockerfile)
+-	[`v1.16.1_upstream_check_fair`](https://github.com/blueapple168/nginx-curl/blob/master/nginx_upstream_check_fair/1.16.1/Dockerfile)
+
 # [ngx_http_upstream_check_module](https://github.com/yaoweibin/nginx_upstream_check_module)
 Add proactive health check for the upstream servers.
 it should be enabled with the --with-http_upstream_check_module configuration parameter.
+
+
 ## Examples
 ```
 http {
