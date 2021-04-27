@@ -1,10 +1,10 @@
-# Base on [nginx 1.16.1-alpine](https://nginx.org/download/nginx-1.16.1.tar.gz) or nginx 1.20.0-alpine(https://nginx.org/download/nginx-1.20.0.tar.gz)
-- Nginx
+# Base on [nginx 1.16.1-alpine](https://nginx.org/download/nginx-1.16.1.tar.gz) or [nginx 1.20.0-alpine](https://nginx.org/download/nginx-1.20.0.tar.gz)
+- nginx
 - curl
-- net-tools\
+- net-tools
 - ngx_http_upstream_check_module
 - ngx_http_upstream_fair_module
-
+- ..
 # 支持的tags和 `Dockerfile`链接
 -	[`v1.20.0_upstream_check_fair`](https://github.com/blueapple168/nginx-curl/blob/master/nginx_upstream_check_fair/1.20.0/Dockerfile)
 -	[`v1.16.1_upstream_check_fair`](https://github.com/blueapple168/nginx-curl/blob/master/nginx_upstream_check_fair/1.16.1/Dockerfile)
